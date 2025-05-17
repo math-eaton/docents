@@ -1,0 +1,40 @@
+---
+import { useState, useEffect } from "react";
+import { secrets } from "../secrets.js";
+
+// Replace with your actual Google Sheets API URL (CSV or JSON)
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/YOUR_PUBLISHED_CSV_URL/pub?output=csv";
+
+const [events, setEvents] = useState([]);
+
+useEffect(() => {
+  fetch(SHEET_URL)
+    .then(res => res.text())  // Google Sheets CSV is text
+    .then(csv => {
+      const rows = csv.split("\n").slice(1); // Remove headers
+      const data = rows.map(row => {
+        const [date, venue, city, bands] = row.split(",");
+        return { 
+          date: new Date(date.trim()), 
+          venue: venue.trim(), 
+          city: city.trim(), 
+          bands: bands ? bands.trim() : "" 
+        };
+      });
+      setEvents(data.sort((a, b) => b.date - a.date)); // Sort descending
+    })
+    .catch(error => console.error("Error fetching events:", error));
+}, []);
+---
+
+<section>
+  <h2>Past Shows</h2>
+  <ul>
+    {events.map(event => (
+      <li key={event.date}>
+        <strong>{event.date.toLocaleDateString()}</strong> — {event.venue}, {event.city}
+        {event.bands && ` (w/ ${event.bands})`}
+      </li>
+    ))}
+  </ul>
+</section>
