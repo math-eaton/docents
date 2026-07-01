@@ -24,3 +24,9 @@ pnpm-debug.log*
 .idea/
 
 secret.js
+
+*claude*
+.vscode
+
+
+data/
