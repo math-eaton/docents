@@ -21,12 +21,5 @@
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "wrangler": "^4.106.0"
-  },
-  "allowScripts": {
-    "esbuild@0.28.1": true,
-    "esbuild@0.25.12": true,
-    "fsevents@2.3.3": true,
-    "sharp@0.34.5": true,
-    "workerd@1.20260630.1": true
   }
 }
